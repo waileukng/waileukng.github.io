@@ -1,0 +1,60 @@
+NG, Wai Leuk | William
+Junior Software Engineer – ML & AI Field
+Brooklyn, NY | (929) 678-6849 | waileukng@gmail.com | linkedin.com/in/ng-w-81a967244 | github.com/waileukng
+Summary
+AI & Deep Learning Enthusiast
+As an Electronic and Information Engineering graduate, has hands-on skills in developing deep learning models for image generation using PyTorch, including GAN, DPPM, and LLM methods. Employs AI solutions in different projects and seeks to hire expertise in Machine Learning in the USA’s tech sector.
+Skills
+Technical Skills
+* Programming: Python, PyTorch, TensorFlow (basic), C++, Java
+* Machine Learning: Deep Learning, CNNs, GANs, Diffusion Models, Model Training & Evaluation, Computer Vision
+* Tools: Git, Jupyter Notebook, Linux, MATLAB
+* Hardware: Embedded Systems, Signal Processing
+Soft Skills
+* Cross-Functional Teamwork, Problem-Solving, Excellent Communication Skills
+Language
+* English, Chinese (Mandarin, Cantonese)
+Work Experience
+Project Officer, School of Computing and Information Sciences (Par-time)
+Saint Francis University, Hong Kong | July 2024 – May 2025
+* Implemented generative models (GANs, Diffusion Models) for image generation.
+* Collaborated with cross-functional teams to integrate AI solutions, enhancing project outcomes via data-driven insights.
+Student Assistant, Technical Support Desk (Part-time)
+Pao Yue-kong Library, The Hong Kong Polytechnic University, Hong Kong | September 2021 – April 2025
+• Participated in continuous improvement by implementing suggestions, engaging in problem-solving activities to support teamwork. 
+• Resolved problems, improved operations and provided exceptional service.
+Pool Lifeguard (Part-time)
+Hong Kong Disneyland Resort, Hong Kong | October 2023 - May 2025
+* Learned and maintained proficiency in first responder skills such as First Aid and CPR to offer individuals medical support.
+* Observed weather and water conditions and alerted visitors to potential dangers and storms.
+Amusement Ride Operator (Summer Job)
+Adventurers Amusement Park, BROOKLYN, NEW YORK | June 2023 - August 2023
+* Ensured compliance with state regulations by documenting routine safety checks accurately before each shift start time.
+* Collaborated with team members to ensure smooth transitions between shifts, maintaining consistent ride operations throughout the day.
+Digital Marketing (Intern)
+AI Mnemonic, Hong Kong | July 2022 - September 2022
+* Managed marketing campaigns to cultivate brand awareness and drive website traffic.
+* Masterminded highly successful digital strategies for various platforms to attract customer engagement.
+Student Assistant – Research Officer (Part-time)
+PolyU Academy For Interdisciplinary Research, Hong Kong | December 2021 - December 2022
+* Completed clerical tasks such as filing, copying, and distributing mail.
+* Communicated effectively with faculty and staff and accepted critiques and suggestions for areas of improvement.
+Education
+Bachelor of Engineering: Electronic and Information Engineering
+The Hong Kong Polytechnic University, Hong Kong | 2021 – 2025
+* Exchange: Electrical & Computer Engineering, University of Florida, Gainesville, FL | Jan – May 2023
+Activities and Societies
+* Exchange Program, University of Florida (Jan–May 2023): Engaged in Wi-Fi communication labs, developing Arduino-UNO, and Analog board in circuit design.
+* Service Learning Trip, Cambodia (Dates TBD): Volunteered in Siem Reap to support local schools, developing cross-cultural communication and teamwork skills.
+* Reaching Out Award Scholarship (2023): Funded international exchange at UF, recognizing academic excellence.
+* Wong Tit-shing Student Exchange Scholarship (2023): Awarded for academic performance, enabling UF exchange.
+Final Year Project – Honor Project
+Overview
+Under Prof. W.C. Siu's (Emeritus Professor) supervision at The Hong Kong Polytechnic University (2024-2025), we explored deep learning models to create high-resolution images and improve super-resolution models. Advanced models such as StyleGAN2 and Domain Transfer in Latent Space (DTLS) were used in the project to transform noise into high-quality images of face generation. 
+Objectives
+* Employ GAN and DDPM methods to generate high-quality images from random input noise.
+* Improve super-resolution to process low-resolution images and produce results that look realistic.
+* Use pre-trained StyleGAN2 models to generate Asian face datasets with transfer learning.
+Resources
+View the project code and visuals on GitHub. Includes PyTorch implementations of StyleGAN2, DTLS, and sample generated images.
+
