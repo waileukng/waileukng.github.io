@@ -7,6 +7,11 @@ from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__, static_folder='public', static_url_path='')
 
@@ -32,25 +37,29 @@ try:
     loader = TextLoader(CV_PATH, encoding='utf-8')
     documents = loader.load()
 except UnicodeDecodeError:
-    print(f"UTF-8 decoding failed for {CV_PATH}, trying latin1 encoding")
+    logger.warning(f"UTF-8 decoding failed for {CV_PATH}, trying latin1 encoding")
     loader = TextLoader(CV_PATH, encoding='latin1')
     documents = loader.load()
 except Exception as e:
     raise RuntimeError(f"Failed to load cv.txt: {e}")
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=100,
-    chunk_overlap=50,
+    chunk_size=200,  # Reduced for lower memory
+    chunk_overlap=30,  # Reduced for efficiency
     length_function=len,
     add_start_index=True
 )
 chunks = text_splitter.split_documents(documents)
+logger.info(f"Created {len(chunks)} chunks from cv.txt")
 
-# Set up Chroma vector store with HuggingFace embeddings
+# Set up Chroma vector store with lightweight HuggingFace embeddings
 try:
-    embedding = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    embedding = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2",
+        model_kwargs={"device": "cpu"}  # Force CPU for Render
+    )
     db = Chroma.from_documents(chunks, embedding, persist_directory=CHROMA_PATH)
-    print(f"Saved {len(chunks)} chunks to {CHROMA_PATH}")
+    logger.info(f"Saved {len(chunks)} chunks to {CHROMA_PATH}")
 except Exception as e:
     raise RuntimeError(f"Failed to initialize Chroma vector store: {e}")
 
@@ -76,13 +85,13 @@ def load_file_data(filename):
     try:
         df = pd.read_excel(filename)
         csv_data = df.to_csv(index=False)
-        return csv_data
+        return csv_data[:300]  # Limit to 300 chars for memory
     except Exception as e:
-        print(f'XLSX Error: {e}')
+        logger.error(f'XLSX Error: {e}')
         return ''
 
 # Grok API call
-def call_grok_api(prompt, max_tokens=150, temperature=0.7):
+def call_grok_api(prompt, max_tokens=100, temperature=0.7):  # Reduced max_tokens
     try:
         headers = {
             'Authorization': f'Bearer {XAI_API_KEY}',
@@ -98,7 +107,7 @@ def call_grok_api(prompt, max_tokens=150, temperature=0.7):
         response.raise_for_status()
         return response.json()['choices'][0]['message']['content']
     except Exception as e:
-        print(f"Grok API error: {e}")
+        logger.error(f"Grok API error: {e}")
         return None
 
 @app.route('/')
@@ -114,12 +123,12 @@ def chat():
 
     try:
         project_data = load_file_data(XLSX_PATH)
-        results = db.similarity_search_with_relevance_scores(query, k=5)
+        results = db.similarity_search_with_relevance_scores(query, k=3)  # Reduced k
         if not results or results[0][1] < 0.7:
             return jsonify({'reply': 'Sorry, I couldn’t find relevant information to answer your question.'})
 
         context = '\n\n---\n\n'.join([doc.page_content for doc, score in results])
-        prompt = PROMPT_TEMPLATE.format(context=context, project_data=project_data[:500], question=query)
+        prompt = PROMPT_TEMPLATE.format(context=context, project_data=project_data, question=query)
 
         response = call_grok_api(prompt)
         if response is None:
@@ -128,8 +137,9 @@ def chat():
         sources = [doc.metadata.get('source', None) for doc, _ in results]
         return jsonify({'reply': response, 'sources': sources})
     except Exception as e:
-        print(f"Chat error: {e}")
+        logger.error(f"Chat error: {e}")
         return jsonify({'error': 'Failed to process message'}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3000, debug=True)
+    port = int(os.environ.get('PORT', 3000))  # Use Render's PORT
+    app.run(host='0.0.0.0', port=port, debug=False)  # Disable debug
