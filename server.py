@@ -5,7 +5,7 @@ import requests
 from dotenv import load_dotenv
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 import logging
 
@@ -24,7 +24,6 @@ if not XAI_API_KEY:
 # File paths
 CV_PATH = 'xlsx_output/cv.txt'
 XLSX_PATH = 'xlsx_output/project_data.xlsx'
-CHROMA_PATH = 'my_database'
 
 # Verify file existence
 if not os.path.exists(CV_PATH):
@@ -44,24 +43,24 @@ except Exception as e:
     raise RuntimeError(f"Failed to load cv.txt: {e}")
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=200,  # Reduced for lower memory
-    chunk_overlap=30,  # Reduced for efficiency
+    chunk_size=100,  # Further reduced for short document
+    chunk_overlap=20,  # Reduced for efficiency
     length_function=len,
     add_start_index=True
 )
 chunks = text_splitter.split_documents(documents)
 logger.info(f"Created {len(chunks)} chunks from cv.txt")
 
-# Set up Chroma vector store with lightweight HuggingFace embeddings
+# Set up FAISS vector store with lightweight HuggingFace embeddings
 try:
     embedding = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
         model_kwargs={"device": "cpu"}  # Force CPU for Render
     )
-    db = Chroma.from_documents(chunks, embedding, persist_directory=CHROMA_PATH)
-    logger.info(f"Saved {len(chunks)} chunks to {CHROMA_PATH}")
+    db = FAISS.from_documents(chunks, embedding)
+    logger.info(f"Initialized FAISS with {len(chunks)} chunks")
 except Exception as e:
-    raise RuntimeError(f"Failed to initialize Chroma vector store: {e}")
+    raise RuntimeError(f"Failed to initialize FAISS vector store: {e}")
 
 # Prompt template
 PROMPT_TEMPLATE = """
@@ -85,13 +84,13 @@ def load_file_data(filename):
     try:
         df = pd.read_excel(filename)
         csv_data = df.to_csv(index=False)
-        return csv_data[:300]  # Limit to 300 chars for memory
+        return csv_data[:200]  # Further reduced for memory
     except Exception as e:
         logger.error(f'XLSX Error: {e}')
         return ''
 
 # Grok API call
-def call_grok_api(prompt, max_tokens=100, temperature=0.7):  # Reduced max_tokens
+def call_grok_api(prompt, max_tokens=80, temperature=0.7):  # Further reduced max_tokens
     try:
         headers = {
             'Authorization': f'Bearer {XAI_API_KEY}',
@@ -123,8 +122,8 @@ def chat():
 
     try:
         project_data = load_file_data(XLSX_PATH)
-        results = db.similarity_search_with_relevance_scores(query, k=3)  # Reduced k
-        if not results or results[0][1] < 0.7:
+        results = db.similarity_search_with_relevance_scores(query, k=3)
+        if not results or results[0][1] < 0.5:  # Lowered threshold for better recall
             return jsonify({'reply': 'Sorry, I couldn’t find relevant information to answer your question.'})
 
         context = '\n\n---\n\n'.join([doc.page_content for doc, score in results])
