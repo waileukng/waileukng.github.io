@@ -43,8 +43,8 @@ except Exception as e:
     raise RuntimeError(f"Failed to load cv.txt: {e}")
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=100,  # Further reduced for short document
-    chunk_overlap=20,  # Reduced for efficiency
+    chunk_size=20,  # Further reduced for short document
+    chunk_overlap=5,  # Reduced for efficiency
     length_function=len,
     add_start_index=True
 )
