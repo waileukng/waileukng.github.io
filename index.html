@@ -1,76 +1,193 @@
-<!DOCTYPE html>
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>William NG - Personal Portfolio</title>
+    <title>William NG - AI Expert Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: 'Calibri', sans-serif; }
-        .section-title { border-bottom: 2px solid #1e40af; }
+        body {
+            font-family: 'Calibri', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #8e2de2);
+            color: #ffffff;
+        }
+        .section-title { 
+            border-bottom: 3px solid #ffd700; 
+            padding-bottom: 0.5rem;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .highlight { color: #ffd700; }
+        .skill-badge { 
+            background-color: #10b981; 
+            padding: 0.25rem 0.75rem; 
+            border-radius: 9999px; 
+            margin: 0.25rem; 
+            display: inline-block;
+        }
+        .project-card { 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(5px); 
+            border: 1px solid #ffffff33;
+        }
+        .cta-button {
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            color: #ffffff;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #ffd700;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .bounce {
+            animation: bounce 0.5s ease infinite alternate;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
         #messages { max-height: 300px; overflow-y: auto; }
-        .message { margin-bottom: 0.5rem; }
-        .user-message { text-align: right; }
-        .bot-message { text-align: left; }
+        .message { margin-bottom: 0.5rem; padding: 0.5rem; border-radius: 0.375rem; }
+        .user-message { background-color: #10b981; color: #ffffff; text-align: right; }
+        .bot-message { background-color: #ffffff33; color: #000000; text-align: left; }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
-    <!-- Header -->
-    <header class="bg-blue-800 text-white py-6">
-        <div class="container mx-auto px-4 text-center">
-            <h1 class="text-3xl font-bold">NG, Wai Leuk | William</h1>
-            <p class="text-lg">AI & Deep Learning Enthusiast | EIE Graduate</p>
+<body class="min-h-screen">
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-blue-900 to-purple-900 py-12 text-center fade-in">
+        <div class="container mx-auto px-4">
+            <h1 class="text-5xl font-extrabold text-yellow-300">NG, Wai Leuk | William</h1>
+            <p class="text-2xl mt-2 text-green-300">AI & Deep Learning Specialist | PolyU EIE Graduate</p>
+            <p class="text-lg mt-2 text-white">Available for U.S. Tech Roles | Expert in Image Generation</p>
             <nav class="mt-4">
-                <a href="#home" class="text-white hover:underline mx-2">Home</a>
-                <a href="#projects" class="text-white hover:underline mx-2">Projects</a>
-                <a href="#chat" class="text-white hover:underline mx-2">Chat with Me</a>
-                <a href="#contact" class="text-white hover:underline mx-2">Contact</a>
+                <a href="#home" onclick="scrollToSection('home')" class="text-white hover:underline mx-2">Home</a>
+                <a href="#projects" onclick="scrollToSection('projects')" class="text-white hover:underline mx-2">Projects</a>
+                <a href="#chat" onclick="scrollToSection('chat')" class="text-white hover:underline mx-2">Chat with Me</a>
+                <a href="#contact" onclick="scrollToSection('contact')" class="text-white hover:underline mx-2">Contact</a>
             </nav>
+            <a href="#contact" class="mt-6 inline-block cta-button">Hire Me Today!</a>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
         <!-- About Section -->
-        <section id="home" class="mb-12">
-            <h2 class="text-2xl font-semibold section-title pb-2 mb-4">About Me</h2>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <p>As an Electronic and Information Engineering graduate, has hands-on skills in developing deep learning models for image generation using PyTorch, including GAN, DPPM, and LLM methods. Employs AI solutions in different projects and seeks to hire expertise in Machine Learning in the USA’s tech sector.</p>
+        <section id="home" class="mb-12 fade-in" style="animation-delay: 0.1s;">
+            <h2 class="section-title text-yellow-300 mb-6">About Me</h2>
+            <div class="project-card p-6 rounded-lg">
+                <p class="text-lg">As a PolyU Electronic and Information Engineering graduate, I specialize in developing cutting-edge deep learning models for image generation using <span class="highlight">PyTorch</span>, <span class="highlight">GANs</span>, <span class="highlight">DDPM</span>, and <span class="highlight">LLM</span> techniques. My expertise includes advanced projects like StyleGAN2 and Domain Transfer in Latent Space (DTLS), and I’m eager to bring my skills to the U.S. tech industry.</p>
+                <div class="mt-4">
+                    <span class="skill-badge">PyTorch</span>
+                    <span class="skill-badge">GANs</span>
+                    <span class="skill-badge">StyleGAN2</span>
+                    <span class="skill-badge">DTLS</span>
+                    <span class="skill-badge">Python</span>
+                </div>
             </div>
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="mb-12">
-            <h2 class="text-2xl font-semibold section-title pb-2 mb-4">Projects</h2>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-xl font-medium mb-2 mt-4">Image Generation in Deep Learning (PolyU Final Year Honor Project, 2024–2025)</h3>
+        <section id="projects" class="mb-12 fade-in" style="animation-delay: 0.2s;">
+            <h2 class="section-title text-yellow-300 mb-6">Featured Projects</h2>
+            <div class="project-card p-6 rounded-lg">
+                <h3 class="text-2xl font-semibold text-green-300 mb-4">Image Generation in Deep Learning</h3>
                 <div class="mb-4">
-                    <b>Overview</b>
-                    <p>We explored deep learning models to create high-resolution images and improve super-resolution models. Advanced models such as StyleGAN2 and Domain Transfer in Latent Space (DTLS) were used in the project to transform noise into high-quality images of face generation.</p>
+                    <b class="text-red-300">Overview</b>
+                    <p class="mt-2">My PolyU Final Year Honor Project (2024–2025) explored deep learning to create high-resolution images and enhance super-resolution models. Using <span class="highlight">StyleGAN2</span> and <span class="highlight">DTLS</span>, I transformed noise into realistic face datasets, showcasing innovation in AI-driven image synthesis.</p>
                 </div>
                 <div class="mb-4">
-                    <b>Objectives</b>
-                    <p>• Employ GAN and DDPM methods to generate high-quality images from random input noise.</p>
-                    <p>• Improve super-resolution to process low-resolution images and produce results that look realistic.</p>
-                    <p>• Use pre-trained StyleGAN2 models to generate Asian face datasets with transfer learning.</p>
+                    <b class="text-red-300">Objectives</b>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>Generate high-quality images from noise using GANs and DDPM.</li>
+                        <li>Improve super-resolution for realistic outputs.</li>
+                        <li>Apply transfer learning with pre-trained StyleGAN2 for Asian face datasets.</li>
+                    </ul>
                 </div>
                 <div class="mb-4">
-                    <b>Resources</b>
-                    <p class="mt-4">View code at <a href="https://github.com/waileukng" class="text-blue-600 hover:underline">GitHub</a>.</p>
+                    <b class="text-red-300">Resources</b>
+                    <p class="mt-2">View code: <a href="https://github.com/waileukng" class="text-blue-300 hover:underline">github.com/waileukng</a></p>
                 </div>
             </div>
         </section>
 
-        <!-- Chatbot Section -->
-        <section id="chat" class="mb-12">
-            <h2 class="text-2xl font-semibold section-title pb-2 mb-4">Chat with Me</h2>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <p>Ask about my skills and experience!</p>
+        <!-- FAQ Section -->
+        <section id="chat" class="mb-12 fade-in" style="animation-delay: 0.3s;">
+            <h2 class="section-title text-yellow-300 mb-6">Frequently Asked Questions</h2>
+            <div class="project-card p-6 rounded-lg">
+                <div class="mb-4">
+                    <b class="text-red-300">What are your skills?</b>
+                    <p class="mt-2">I excel in PyTorch, GANs, StyleGAN2, DTLS, and Python, with a focus on image generation and deep learning.</p>
+                </div>
+                <div class="mb-4">
+                    <b class="text-red-300">What projects have you worked on?</b>
+                    <p class="mt-2">My key project is an image generation system using StyleGAN2 and DTLS, completed at PolyU in 2024–2025.</p>
+                </div>
+                <div class="mb-4">
+                    <b class="text-red-300">Are you available for hire?</b>
+                    <p class="mt-2">Yes! I’m seeking opportunities in the U.S. tech sector. Contact me below!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chat with Me Section -->
+        <section id="chatbot" class="mb-12 fade-in" style="animation-delay: 0.4s;">
+            <h2 class="section-title text-yellow-300 mb-6">Chat with Me</h2>
+            <div class="project-card p-6 rounded-lg">
+                <p class="text-lg mb-4">Ask about my skills, projects, or availability! (Static demo)</p>
                 <div id="chatbot-container" class="border p-4 rounded mt-4">
                     <div id="messages" class="mb-4"></div>
                     <div class="flex">
-                        <input id="messageInput" type="text" class="flex-grow p-2 border rounded-l focus:outline-none" placeholder="Ask about my skills or projects...">
-                        <button id="sendButton" class="bg-blue-600 text-white p-2 rounded-r hover:bg-blue-700">Send</button>
+                        <input id="messageInput" type="text" class="flex-grow p-2 border rounded-l focus:outline-none bg-white text-black" placeholder="Type your question...">
+                        <button id="sendButton" class="bg-blue-600 text-white p-2 rounded-r hover:bg-blue-700 bounce">Send</button>
                     </div>
                     <div id="loading" class="hidden text-gray-500 mt-2">Loading...</div>
                 </div>
@@ -78,96 +195,65 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="mb-12">
-            <h2 class="text-2xl font-semibold section-title pb-2 mb-4">Contact</h2>
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <p>Email: <a href="mailto:waileukng@gmail.com" class="text-blue-600 hover:underline">waileukng@gmail.com</a></p>
-                <p>LinkedIn: <a href="https://linkedin.com/in/ng-w-81a967244" class="text-blue-600 hover:underline">linkedin.com/in/waileukng</a></p>
-                <p>GitHub: <a href="https://github.com/waileukng" class="text-blue-600 hover:underline">github.com/waileukng</a></p>
+        <section id="contact" class="mb-12 fade-in" style="animation-delay: 0.5s;">
+            <h2 class="section-title text-yellow-300 mb-6">Get in Touch</h2>
+            <div class="project-card p-6 rounded-lg">
+                <p>Email: <a href="mailto:waileukng@gmail.com" class="text-blue-300 hover:underline">waileukng@gmail.com</a></p>
+                <p>LinkedIn: <a href="https://linkedin.com/in/ng-w-81a967244" class="text-blue-300 hover:underline">linkedin.com/in/waileukng</a></p>
+                <p>GitHub: <a href="https://github.com/waileukng" class="text-blue-300 hover:underline">github.com/waileukng</a></p>
+                <a href="mailto:waileukng@gmail.com" class="mt-4 inline-block cta-button">Contact Me Now!</a>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-blue-800 text-white py-4 text-center">
-        <p>© 2025 William NG. All rights reserved.</p>
+    <footer class="bg-gradient-to-r from-blue-900 to-purple-900 py-6 text-center fade-in" style="animation-delay: 0.6s;">
+        <p class="text-white">© 2025 William NG. All rights reserved.</p>
     </footer>
 
     <!-- SheetJS (for optional client-side .xlsx processing) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-            return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-                try {
-                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                    var firstSheetName = workbook.SheetNames[0];
-                    var worksheet = workbook.Sheets[firstSheetName];
-                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                    var filteredData = jsonData.filter(row => row.some(filledCell));
-                    var headerRowIndex = filteredData.findIndex((row, index) =>
-                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                    );
-                    if (headerRowIndex === -1 || headerRowIndex > 25) {
-                        headerRowIndex = 0;
-                    }
-                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
-                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                    return csv;
-                } catch (e) {
-                    console.error(e);
-                    return "";
-                }
-            }
-            return gk_fileData[filename] || "";
-        }
-    </script>
 
     <!-- Chatbox Script -->
     <script>
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
         const sendButton = document.getElementById('sendButton');
         const messageInput = document.getElementById('messageInput');
         const messagesDiv = document.getElementById('messages');
         const loadingDiv = document.getElementById('loading');
 
+        const responses = {
+            "what are your skills": "I excel in PyTorch, GANs, StyleGAN2, DTLS, and Python, with a focus on image generation and deep learning.",
+            "what projects have you worked on": "My key project is an image generation system using StyleGAN2 and DTLS, completed at PolyU in 2024–2025.",
+            "are you available for hire": "Yes! I’m available for hire and seeking U.S. tech roles. Contact me at waileukng@gmail.com!",
+            "default": "Feel free to ask about my skills, projects, or availability! For more details, contact me."
+        };
+
         function addMessage(content, isUser) {
             const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${isUser ? 'user-message text-blue-600' : 'bot-message text-gray-800'}`;
+            messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
             messageDiv.textContent = content;
             messagesDiv.appendChild(messageDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            if (!isUser) messageDiv.classList.add('fade-in');
         }
 
-        sendButton.addEventListener('click', async () => {
-            const message = messageInput.value.trim();
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value.trim().toLowerCase();
             if (!message) return;
 
             addMessage(message, true);
             messageInput.value = '';
             loadingDiv.classList.remove('hidden');
 
-            try {
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message })
-                });
-                const data = await response.json();
-                if (data.error) {
-                    addMessage(`Error: ${data.error}`, false);
-                } else {
-                    addMessage(data.reply, false);
-                }
-            } catch (error) {
-                addMessage('Error: Failed to get response', false);
-            } finally {
+            setTimeout(() => {
+                const reply = responses[message] || responses["default"];
+                addMessage(reply, false);
                 loadingDiv.classList.add('hidden');
-            }
+            }, 1000); // Simulate delay for animation
         });
 
         messageInput.addEventListener('keypress', (e) => {
