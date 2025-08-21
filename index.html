@@ -3,18 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NG, Wai Leuk | William - AI Portfolio</title>
+    <title>William NG - AI Expert Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { 
-            font-family: 'Calibri', sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+        body {
+            font-family: 'Calibri', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #8e2de2);
+            color: #ffffff;
         }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .section-title { 
+            border-bottom: 3px solid #ffd700; 
+            padding-bottom: 0.5rem;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .highlight { color: #ffd700; }
+        .skill-badge { 
+            background-color: #10b981; 
+            padding: 0.25rem 0.75rem; 
+            border-radius: 9999px; 
+            margin: 0.25rem; 
+            display: inline-block;
+        }
+        .project-card { 
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(5px); 
+            border: 1px solid #ffffff33;
+        }
+        .cta-button {
+            background: linear-gradient(90deg, #ff7e5f, #feb47b);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            color: #ffffff;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #ffd700;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .bounce {
+            animation: bounce 0.5s ease infinite alternate;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
         }
         .chat-container {
             max-height: 400px;
@@ -25,7 +65,7 @@
             word-wrap: break-word;
         }
         .user-message {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
         }
         .bot-message {
@@ -40,119 +80,153 @@
         }
     </style>
 </head>
-<body class="text-gray-800">
-    <!-- Header -->
-    <header class="glass-effect text-white py-8">
-        <div class="container mx-auto px-4 text-center">
-            <h1 class="text-4xl font-bold mb-2">NG, Wai Leuk | William</h1>
-            <p class="text-xl mb-4">AI & Deep Learning Specialist | PolyU EIE Graduate</p>
-            <p class="text-lg mb-6">Available for U.S. Tech Roles | Expert in Image Generation</p>
-            <nav class="flex justify-center space-x-6">
-                <a href="#about" class="hover:text-blue-200 transition-colors">About</a>
-                <a href="#projects" class="hover:text-blue-200 transition-colors">Projects</a>
-                <a href="#chat" class="hover:text-blue-200 transition-colors">Chat with Me</a>
-                <a href="#contact" class="hover:text-blue-200 transition-colors">Contact</a>
+<body class="min-h-screen">
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-blue-900 to-purple-900 py-12 text-center fade-in">
+        <div class="container mx-auto px-4">
+            <h1 class="text-5xl font-extrabold text-yellow-300">NG, Wai Leuk | William</h1>
+            <p class="text-2xl mt-2 text-green-300">AI & Deep Learning Specialist | PolyU EIE Graduate</p>
+            <p class="text-lg mt-2 text-white">Available for U.S. Tech Roles | Expert in Image Generation</p>
+            <nav class="mt-4">
+                <a href="#home" onclick="scrollToSection('home')" class="text-white hover:underline mx-2">Home</a>
+                <a href="#projects" onclick="scrollToSection('projects')" class="text-white hover:underline mx-2">Projects</a>
+                <a href="#chat" onclick="scrollToSection('chat')" class="text-white hover:underline mx-2">Chat with Me</a>
+                <a href="#contact" onclick="scrollToSection('contact')" class="text-white hover:underline mx-2">Contact</a>
             </nav>
+            <a href="#contact" class="mt-6 inline-block cta-button">Hire Me Today!</a>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
         <!-- About Section -->
-        <section id="about" class="mb-12">
-            <div class="glass-effect p-8 rounded-lg">
-                <h2 class="text-3xl font-semibold mb-6 text-white">About Me</h2>
-                <p class="text-lg text-white leading-relaxed">
-                    As a PolyU Electronic and Information Engineering graduate, I specialize in developing cutting-edge deep learning models for image generation using PyTorch, GANs, DDPM, and LLM techniques. My expertise includes advanced projects like StyleGAN2 and Domain Transfer in Latent Space (DTLS), and I'm eager to bring my skills to the U.S. tech industry.
-                </p>
-                <div class="flex flex-wrap gap-2 mt-6">
-                    <span class="px-3 py-1 bg-white bg-opacity-20 text-white rounded-full text-sm">PyTorch</span>
-                    <span class="px-3 py-1 bg-white bg-opacity-20 text-white rounded-full text-sm">GANs</span>
-                    <span class="px-3 py-1 bg-white bg-opacity-20 text-white rounded-full text-sm">StyleGAN2</span>
-                    <span class="px-3 py-1 bg-white bg-opacity-20 text-white rounded-full text-sm">DTLS</span>
-                    <span class="px-3 py-1 bg-white bg-opacity-20 text-white rounded-full text-sm">Python</span>
+        <section id="home" class="mb-12 fade-in" style="animation-delay: 0.1s;">
+            <h2 class="section-title text-yellow-300 mb-6">About Me</h2>
+            <div class="project-card p-6 rounded-lg">
+                <p class="text-lg">As a PolyU Electronic and Information Engineering graduate, I specialize in developing cutting-edge deep learning models for image generation using <span class="highlight">PyTorch</span>, <span class="highlight">GANs</span>, <span class="highlight">DDPM</span>, and <span class="highlight">LLM</span> techniques. My expertise includes advanced projects like StyleGAN2 and Domain Transfer in Latent Space (DTLS), and I'm eager to bring my skills to the U.S. tech industry.</p>
+                <div class="mt-4">
+                    <span class="skill-badge">PyTorch</span>
+                    <span class="skill-badge">GANs</span>
+                    <span class="skill-badge">StyleGAN2</span>
+                    <span class="skill-badge">DTLS</span>
+                    <span class="skill-badge">Python</span>
                 </div>
             </div>
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="mb-12">
-            <div class="glass-effect p-8 rounded-lg">
-                <h2 class="text-3xl font-semibold mb-6 text-white">Featured Projects</h2>
-                <div class="bg-white bg-opacity-10 p-6 rounded-lg">
-                    <h3 class="text-2xl font-medium mb-4 text-white">Image Generation in Deep Learning</h3>
-                    <p class="text-white mb-4">
-                        My PolyU Final Year Honor Project (2024–2025) explored deep learning to create high-resolution images and enhance super-resolution models. Using StyleGAN2 and DTLS, I transformed noise into realistic face datasets, showcasing innovation in AI-driven image synthesis.
-                    </p>
-                    <div class="mb-4">
-                        <h4 class="text-lg font-medium text-white mb-2">Objectives</h4>
-                        <ul class="text-white space-y-1">
-                            <li>• Generate high-quality images from noise using GANs and DDPM.</li>
-                            <li>• Improve super-resolution for realistic outputs.</li>
-                            <li>• Apply transfer learning with pre-trained StyleGAN2 for Asian face datasets.</li>
-                        </ul>
-                    </div>
-                    <div class="mt-6">
-                        <a href="https://github.com/waileukng" class="text-blue-200 hover:text-blue-100 underline">View code: github.com/waileukng</a>
-                    </div>
+        <section id="projects" class="mb-12 fade-in" style="animation-delay: 0.2s;">
+            <h2 class="section-title text-yellow-300 mb-6">Featured Projects</h2>
+            <div class="project-card p-6 rounded-lg">
+                <h3 class="text-2xl font-semibold text-green-300 mb-4">Image Generation in Deep Learning</h3>
+                <div class="mb-4">
+                    <b class="text-red-300">Overview</b>
+                    <p class="mt-2">My PolyU Final Year Honor Project (2024–2025) explored deep learning to create high-resolution images and enhance super-resolution models. Using <span class="highlight">StyleGAN2</span> and <span class="highlight">DTLS</span>, I transformed noise into realistic face datasets, showcasing innovation in AI-driven image synthesis.</p>
+                </div>
+                <div class="mb-4">
+                    <b class="text-red-300">Objectives</b>
+                    <ul class="list-disc list-inside mt-2">
+                        <li>Generate high-quality images from noise using GANs and DDPM.</li>
+                        <li>Improve super-resolution for realistic outputs.</li>
+                        <li>Apply transfer learning with pre-trained StyleGAN2 for Asian face datasets.</li>
+                    </ul>
+                </div>
+                <div class="mb-4">
+                    <b class="text-red-300">Resources</b>
+                    <p class="mt-2">View code: <a href="https://github.com/waileukng" class="text-blue-300 hover:underline">github.com/waileukng</a></p>
                 </div>
             </div>
         </section>
 
-        <!-- Chatbot Section -->
-        <section id="chat" class="mb-12">
-            <div class="glass-effect p-8 rounded-lg">
-                <h2 class="text-3xl font-semibold mb-6 text-white">Chat with Me</h2>
-                <div class="bg-white bg-opacity-10 p-6 rounded-lg">
-                    <div class="mb-4 p-4 bg-white bg-opacity-20 rounded-lg">
-                        <h3 class="font-semibold text-white mb-2">What I can help you with:</h3>
-                        <ul class="text-white text-sm space-y-1">
-                            <li>• Ask about William's skills, experience, and education</li>
-                            <li>• Learn about his projects and research work</li>
-                            <li>• Get information about his background and achievements</li>
-                        </ul>
-                        <p class="text-xs text-blue-200 mt-2 italic">Note: I can only answer questions about William NG based on his CV and project data.</p>
-                    </div>
-                    <div class="chat-container mb-4 p-4 bg-white bg-opacity-20 rounded-lg" id="chatContainer">
-                        <!-- Messages will appear here -->
-                    </div>
-                    <div class="flex">
-                        <input id="messageInput" type="text" class="flex-grow p-3 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Ask about William's skills, experience, or projects...">
-                        <button id="sendButton" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-r hover:from-blue-700 hover:to-purple-700 transition-all">Send</button>
-                    </div>
-                    <div id="typingIndicator" class="typing-indicator text-white mt-2 flex items-center">
-                        <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                        Thinking...
-                    </div>
+        <!-- Chat with Me Section -->
+        <section id="chat" class="mb-12 fade-in" style="animation-delay: 0.3s;">
+            <h2 class="section-title text-yellow-300 mb-6">Chat with Me</h2>
+            <div class="project-card p-6 rounded-lg">
+                <div class="mb-4 p-4 bg-white bg-opacity-20 rounded-lg">
+                    <h3 class="font-semibold text-white mb-2">What I can help you with:</h3>
+                    <ul class="text-white text-sm space-y-1">
+                        <li>• Ask about William's skills, experience, and education</li>
+                        <li>• Learn about his projects and research work</li>
+                        <li>• Get information about his background and achievements</li>
+                    </ul>
+                    <p class="text-xs text-blue-200 mt-2 italic">Note: I can only answer questions about William NG based on his CV and project data.</p>
+                </div>
+                <div class="chat-container mb-4 p-4 bg-white bg-opacity-20 rounded-lg" id="chatContainer">
+                    <!-- Messages will appear here -->
+                </div>
+                <div class="flex">
+                    <input id="messageInput" type="text" class="flex-grow p-3 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-black" placeholder="Ask about William's skills, experience, or projects...">
+                    <button id="sendButton" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-r hover:from-blue-700 hover:to-purple-700 transition-all bounce">Send</button>
+                </div>
+                <div id="typingIndicator" class="typing-indicator text-white mt-2 flex items-center">
+                    <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Thinking...
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="mb-12">
-            <div class="glass-effect p-8 rounded-lg">
-                <h2 class="text-3xl font-semibold mb-6 text-white">Get in Touch</h2>
-                <div class="bg-white bg-opacity-10 p-6 rounded-lg">
-                    <div class="space-y-4 text-white">
-                        <p>Email: <a href="mailto:waileukng@gmail.com" class="text-blue-200 hover:text-blue-100 underline">waileukng@gmail.com</a></p>
-                        <p>LinkedIn: <a href="https://linkedin.com/in/waileukng" class="text-blue-200 hover:text-blue-100 underline">linkedin.com/in/waileukng</a></p>
-                        <p>GitHub: <a href="https://github.com/waileukng" class="text-blue-200 hover:text-blue-100 underline">github.com/waileukng</a></p>
-                    </div>
-                    <div class="mt-6">
-                        <a href="mailto:waileukng@gmail.com" class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all">Contact Me Now!</a>
-                    </div>
+        <section id="contact" class="mb-12 fade-in" style="animation-delay: 0.4s;">
+            <h2 class="section-title text-yellow-300 mb-6">Get in Touch</h2>
+            <div class="project-card p-6 rounded-lg">
+                <div class="space-y-4 text-white">
+                    <p>Email: <a href="mailto:waileukng@gmail.com" class="text-blue-300 hover:underline">waileukng@gmail.com</a></p>
+                    <p>LinkedIn: <a href="https://linkedin.com/in/waileukng" class="text-blue-300 hover:underline">linkedin.com/in/waileukng</a></p>
+                    <p>GitHub: <a href="https://github.com/waileukng" class="text-blue-300 hover:underline">github.com/waileukng</a></p>
+                </div>
+                <div class="mt-6">
+                    <a href="mailto:waileukng@gmail.com" class="inline-block cta-button">Contact Me Now!</a>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="glass-effect text-white py-6 text-center">
-        <p>© 2025 William NG. All rights reserved.</p>
+    <footer class="bg-gradient-to-r from-blue-900 to-purple-900 py-6 text-center fade-in" style="animation-delay: 0.5s;">
+        <p class="text-white">© 2025 William NG. All rights reserved.</p>
     </footer>
 
-    <!-- Chatbot Logic -->
+    <!-- SheetJS (for optional client-side .xlsx processing) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error(e);
+                    return "";
+                }
+            }
+            return gk_fileData[filename] || "";
+        }
+    </script>
+
+    <!-- Enhanced Chatbot Script -->
     <script>
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
         // William's information database
         const williamData = {
             name: "William NG (Wai Leuk)",
@@ -199,6 +273,8 @@
             messageDiv.appendChild(messageBubble);
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            if (!isUser) messageBubble.classList.add('fade-in');
         }
 
         // Check if question is about William
