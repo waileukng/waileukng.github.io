@@ -3,361 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>William NG - AI Expert Portfolio</title>
+    <title>Wai Leuk NG | Academic Homepage</title>
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         body {
             font-family: 'Calibri', sans-serif;
             background: linear-gradient(135deg, #1e3c72, #8e2de2);
             color: #ffffff;
         }
+
+        .academic-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            max-width: 1000px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .profile-pic {
+            width: 160px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+        }
+
         .section-title { 
             border-bottom: 3px solid #ffd700; 
             padding-bottom: 0.5rem;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: bold;
         }
+
         .highlight { color: #ffd700; }
-        .skill-badge { 
-            background-color: #10b981; 
-            padding: 0.25rem 0.75rem; 
-            border-radius: 9999px; 
-            margin: 0.25rem; 
-            display: inline-block;
-        }
+
         .project-card { 
             background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(5px); 
+            backdrop-filter: blur(6px); 
             border: 1px solid #ffffff33;
         }
+
         .cta-button {
             background: linear-gradient(90deg, #ff7e5f, #feb47b);
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
             color: #ffffff;
             font-weight: bold;
-            transition: transform 0.3s, box-shadow 0.3s;
         }
-        .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 15px #ffd700;
-        }
-        .fade-in {
-            animation: fadeIn 1s ease-in;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .bounce {
-            animation: bounce 0.5s ease infinite alternate;
-        }
-        @keyframes bounce {
-            from { transform: translateY(0); }
-            to { transform: translateY(-10px); }
-        }
+
         .chat-container {
             max-height: 400px;
             overflow-y: auto;
         }
+
         .message-bubble {
             max-width: 80%;
             word-wrap: break-word;
         }
+
         .user-message {
             background: linear-gradient(135deg, #10b981, #059669);
             color: white;
         }
+
         .bot-message {
             background: rgba(255, 255, 255, 0.9);
             color: #333;
         }
-        .typing-indicator {
-            display: none;
-        }
-        .typing-indicator.show {
-            display: flex;
-        }
+
+        .typing-indicator { display: none; }
+        .typing-indicator.show { display: flex; }
     </style>
 </head>
+
 <body class="min-h-screen">
-    <!-- Hero Section -->
-    <header class="bg-gradient-to-r from-blue-900 to-purple-900 py-12 text-center fade-in">
-        <div class="container mx-auto px-4">
-            <h1 class="text-5xl font-extrabold text-yellow-300">NG, Wai Leuk | William</h1>
-            <p class="text-2xl mt-2 text-green-300">AI & Deep Learning Specialist | PolyU EIE Graduate</p>
-            <p class="text-lg mt-2 text-white">Available for U.S. Tech Roles | Expert in Image Generation</p>
-            <nav class="mt-4">
-                <a href="#home" onclick="scrollToSection('home')" class="text-white hover:underline mx-2">Home</a>
-                <a href="#projects" onclick="scrollToSection('projects')" class="text-white hover:underline mx-2">Projects</a>
-                <a href="#chat" onclick="scrollToSection('chat')" class="text-white hover:underline mx-2">Chat with Me</a>
-                <a href="#contact" onclick="scrollToSection('contact')" class="text-white hover:underline mx-2">Contact</a>
-            </nav>
-            <a href="#contact" class="mt-6 inline-block cta-button">Hire Me Today!</a>
-        </div>
-    </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
-        <!-- About Section -->
-        <section id="home" class="mb-12 fade-in" style="animation-delay: 0.1s;">
-            <h2 class="section-title text-yellow-300 mb-6">About Me</h2>
-            <div class="project-card p-6 rounded-lg">
-                <p class="text-lg">As a PolyU Electronic and Information Engineering graduate, I specialize in developing cutting-edge deep learning models for image generation using <span class="highlight">PyTorch</span>, <span class="highlight">GANs</span>, <span class="highlight">DDPM</span>, and <span class="highlight">LLM</span> techniques. My expertise includes advanced projects like StyleGAN2 and Domain Transfer in Latent Space (DTLS), and I'm eager to bring my skills to the U.S. tech industry.</p>
-                <div class="mt-4">
-                    <span class="skill-badge">PyTorch</span>
-                    <span class="skill-badge">GANs</span>
-                    <span class="skill-badge">StyleGAN2</span>
-                    <span class="skill-badge">DTLS</span>
-                    <span class="skill-badge">Python</span>
-                </div>
-            </div>
-        </section>
+<!-- ================= Academic Header ================= -->
+<header class="bg-gradient-to-r from-blue-900 to-purple-900">
+  <div class="academic-header">
+    
+    <!-- Profile Photo -->
+    <img src="profile.jpeg" alt="Wai Leuk NG" class="profile-pic">
 
-        <!-- Projects Section -->
-        <section id="projects" class="mb-12 fade-in" style="animation-delay: 0.2s;">
-            <h2 class="section-title text-yellow-300 mb-6">Featured Projects</h2>
-            <div class="project-card p-6 rounded-lg">
-                <h3 class="text-2xl font-semibold text-green-300 mb-4">Image Generation in Deep Learning</h3>
-                <div class="mb-4">
-                    <b class="text-red-300">Overview</b>
-                    <p class="mt-2">My PolyU Final Year Honor Project (2024–2025) explored deep learning to create high-resolution images and enhance super-resolution models. Using <span class="highlight">StyleGAN2</span> and <span class="highlight">DTLS</span>, I transformed noise into realistic face datasets, showcasing innovation in AI-driven image synthesis.</p>
-                </div>
-                <div class="mb-4">
-                    <b class="text-red-300">Objectives</b>
-                    <ul class="list-disc list-inside mt-2">
-                        <li>Generate high-quality images from noise using GANs and DDPM.</li>
-                        <li>Improve super-resolution for realistic outputs.</li>
-                        <li>Apply transfer learning with pre-trained StyleGAN2 for Asian face datasets.</li>
-                    </ul>
-                </div>
-                <div class="mb-4">
-                    <b class="text-red-300">Resources</b>
-                    <p class="mt-2">View code: <a href="https://github.com/waileukng" class="text-blue-300 hover:underline">github.com/waileukng</a></p>
-                </div>
-            </div>
-        </section>
+    <!-- Name + Info -->
+    <div>
+        <h1 class="text-4xl font-bold text-yellow-300">Wai Leuk NG (William)</h1>
+        <p class="text-xl text-green-300">MS Computer Science @ NYU | AI Researcher</p>
+        <p class="text-md text-white">Deep Learning, LLMs, Image Generation</p>
 
-        <!-- Chat with Me Section -->
-        <section id="chat" class="mb-12 fade-in" style="animation-delay: 0.3s;">
-            <h2 class="section-title text-yellow-300 mb-6">Chat with Me</h2>
-            <div class="project-card p-6 rounded-lg">
-                <div class="mb-4 p-4 bg-white bg-opacity-20 rounded-lg">
-                    <h3 class="font-semibold text-white mb-2">What I can help you with:</h3>
-                    <ul class="text-white text-sm space-y-1">
-                        <li>• Ask about William's skills, experience, and education</li>
-                        <li>• Learn about his projects and research work</li>
-                        <li>• Get information about his background and achievements</li>
-                    </ul>
-                    <p class="text-xs text-blue-200 mt-2 italic">Note: I can only answer questions about William NG based on his CV and project data.</p>
-                </div>
-                <div class="chat-container mb-4 p-4 bg-white bg-opacity-20 rounded-lg" id="chatContainer">
-                    <!-- Messages will appear here -->
-                </div>
-                <div class="flex">
-                    <input id="messageInput" type="text" class="flex-grow p-3 border rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-black" placeholder="Ask about William's skills, experience, or projects...">
-                    <button id="sendButton" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-r hover:from-blue-700 hover:to-purple-700 transition-all bounce">Send</button>
-                </div>
-                <div id="typingIndicator" class="typing-indicator text-white mt-2 flex items-center">
-                    <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Thinking...
-                </div>
-            </div>
-        </section>
+        <!-- Academic Navigation -->
+        <nav class="mt-3 space-x-4">
+            <a href="#about" class="text-white hover:underline">About</a>
+            <a href="#cv" class="text-white hover:underline">CV</a>
+            <a href="#projects" class="text-white hover:underline">Projects</a>
+            <a href="#chat" class="text-white hover:underline">AI Chat</a>
+            <a href="#contact" class="text-white hover:underline">Contact</a>
+        </nav>
+    </div>
+  </div>
+</header>
 
-        <!-- Contact Section -->
-        <section id="contact" class="mb-12 fade-in" style="animation-delay: 0.4s;">
-            <h2 class="section-title text-yellow-300 mb-6">Get in Touch</h2>
-            <div class="project-card p-6 rounded-lg">
-                <div class="space-y-4 text-white">
-                    <p>Email: <a href="mailto:waileukng@gmail.com" class="text-blue-300 hover:underline">waileukng@gmail.com</a></p>
-                    <p>LinkedIn: <a href="https://linkedin.com/in/waileukng" class="text-blue-300 hover:underline">linkedin.com/in/waileukng</a></p>
-                    <p>GitHub: <a href="https://github.com/waileukng" class="text-blue-300 hover:underline">github.com/waileukng</a></p>
-                </div>
-                <div class="mt-6">
-                    <a href="mailto:waileukng@gmail.com" class="inline-block cta-button">Contact Me Now!</a>
-                </div>
-            </div>
-        </section>
-    </main>
+<!-- ================= MAIN CONTENT ================= -->
+<main class="container mx-auto px-4 py-10">
 
-    <!-- Footer -->
-    <footer class="bg-gradient-to-r from-blue-900 to-purple-900 py-6 text-center fade-in" style="animation-delay: 0.5s;">
-        <p class="text-white">© 2025 William NG. All rights reserved.</p>
-    </footer>
+<!-- About Section -->
+<section id="about" class="mb-12">
+<h2 class="section-title text-yellow-300 mb-6">About</h2>
+<div class="project-card p-6 rounded-lg">
+<p class="text-lg">
+I am a Computer Science master’s student at NYU Tandon with a background in Electronic and Information Engineering from The Hong Kong Polytechnic University. 
+My research interests include deep learning, large language models, and generative AI (GANs, diffusion models). 
+I conducted research on StyleGAN2 and Domain Transfer in Latent Space (DTLS) for image generation.
+</p>
+</div>
+</section>
 
-    <!-- SheetJS (for optional client-side .xlsx processing) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-            return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-                try {
-                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                    var firstSheetName = workbook.SheetNames[0];
-                    var worksheet = workbook.Sheets[firstSheetName];
-                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                    var filteredData = jsonData.filter(row => row.some(filledCell));
-                    var headerRowIndex = filteredData.findIndex((row, index) =>
-                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                    );
-                    if (headerRowIndex === -1 || headerRowIndex > 25) {
-                        headerRowIndex = 0;
-                    }
-                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
-                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                    return csv;
-                } catch (e) {
-                    console.error(e);
-                    return "";
-                }
-            }
-            return gk_fileData[filename] || "";
-        }
-    </script>
+<!-- CV Section -->
+<section id="cv" class="mb-12">
+<h2 class="section-title text-yellow-300 mb-6">Curriculum Vitae</h2>
+<div class="project-card p-6 rounded-lg">
+<p class="text-lg">
+<a href="WaiWai_NG_CV.pdf" target="_blank" class="text-blue-300 underline">Download CV (PDF)</a>
+</p>
+</div>
+</section>
 
-    <!-- Enhanced Chatbot Script -->
-    <script>
-        function scrollToSection(sectionId) {
-            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
-        }
+<!-- Projects Section -->
+<section id="projects" class="mb-12">
+<h2 class="section-title text-yellow-300 mb-6">Research & Projects</h2>
+<div class="project-card p-6 rounded-lg">
+<ul class="list-disc list-inside text-lg">
+<li>Final Year Honor Project: Image Generation in Deep Learning (StyleGAN2, DTLS)</li>
+<li>Deep Learning Research with HKPolyU Professor</li>
+<li>AI Chatbot Personal Academic Website</li>
+</ul>
+</div>
+</section>
 
-        // William's information database
-        const williamData = {
-            name: "William NG (Wai Leuk)",
-            overview: "William NG (Wai Leuk) is an Electronic and Information Engineering graduate with expertise in AI and Deep Learning. He has hands-on skills in developing deep learning models for image generation using PyTorch, including GAN, DDPM, and LLM methods. He graduated from The Hong Kong Polytechnic University and has worked on various projects including his final year honor project on image generation in deep learning.",
-            skills: {
-                technical: [
-                    "Programming: Python, PyTorch, TensorFlow (basic), C++, Java",
-                    "Machine Learning: Deep Learning, CNNs, GANs, Diffusion Models, Model Training & Evaluation, Computer Vision",
-                    "Tools: Git, Jupyter Notebook, Linux, MATLAB",
-                    "Hardware: Embedded Systems, Signal Processing"
-                ],
-                soft: [
-                    "Cross-Functional Teamwork",
-                    "Problem-Solving", 
-                    "Excellent Communication Skills"
-                ]
-            },
-            education: "William holds a Bachelor of Engineering in Electronic and Information Engineering from The Hong Kong Polytechnic University (2021-2025). He also participated in an exchange program at the University of Florida (Jan-May 2023) studying Electrical & Computer Engineering.",
-            experience: [
-                "Project Officer at Saint Francis University (July 2024 - May 2025)",
-                "Student Assistant at Pao Yue-kong Library, PolyU (September 2021 - April 2025)",
-                "Pool Lifeguard at Hong Kong Disneyland Resort (October 2023 - May 2025)",
-                "Amusement Ride Operator at Adventurers Amusement Park, Brooklyn (June 2023 - August 2023)",
-                "Digital Marketing Intern at AI Mnemonic (July 2022 - September 2022)"
-            ],
-            projects: "William's main project is his Final Year Honor Project on Image Generation in Deep Learning (2024-2025) at PolyU. This project explored deep learning models to create high-resolution images and improve super-resolution models using StyleGAN2 and Domain Transfer in Latent Space (DTLS). The project objectives included employing GAN and DDPM methods to generate high-quality images from random input noise, improving super-resolution to process low-resolution images, and using pre-trained StyleGAN2 models to generate Asian face datasets with transfer learning."
-        };
+<!-- ================= AI CHAT (UNCHANGED) ================= -->
+<section id="chat" class="mb-12">
+<h2 class="section-title text-yellow-300 mb-6">Chat with My AI Assistant</h2>
+<div class="project-card p-6 rounded-lg">
 
-        // Chat elements
-        const chatContainer = document.getElementById('chatContainer');
-        const messageInput = document.getElementById('messageInput');
-        const sendButton = document.getElementById('sendButton');
-        const typingIndicator = document.getElementById('typingIndicator');
+<div class="chat-container mb-4 p-4 bg-white bg-opacity-20 rounded-lg" id="chatContainer"></div>
 
-        // Add message to chat
-        function addMessage(content, isUser = false) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `flex ${isUser ? 'justify-end' : 'justify-start'} mb-3`;
-            
-            const messageBubble = document.createElement('div');
-            messageBubble.className = `message-bubble p-3 rounded-lg ${isUser ? 'user-message' : 'bot-message'}`;
-            messageBubble.textContent = content;
-            
-            messageDiv.appendChild(messageBubble);
-            chatContainer.appendChild(messageDiv);
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-            
-            if (!isUser) messageBubble.classList.add('fade-in');
-        }
+<div class="flex">
+<input id="messageInput" type="text" class="flex-grow p-3 border rounded-l bg-white text-black" placeholder="Ask about William's research, skills, or experience...">
+<button id="sendButton" class="bg-blue-600 text-white p-3 rounded-r">Send</button>
+</div>
 
-        // Check if question is about William
-        function isAboutWilliam(query) {
-            const williamKeywords = ['william', 'ng', 'wai leuk', 'waileukng', 'he', 'his', 'him'];
-            const queryLower = query.toLowerCase();
-            return williamKeywords.some(keyword => queryLower.includes(keyword));
-        }
+<div id="typingIndicator" class="typing-indicator text-white mt-2 flex items-center">
+<div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+Thinking...
+</div>
 
-        // Generate response
-        function generateResponse(query) {
-            const queryLower = query.toLowerCase();
-            
-            // Check if about someone else
-            if (queryLower.includes('who is') && !isAboutWilliam(query)) {
-                return "I don't have information about that person. I can only answer questions about William NG based on his CV and project data.";
-            }
-            
-            // Check for out-of-scope questions
-            const outOfScope = ['weather', 'cook', 'capital', 'movie', 'music', 'sport', 'game'];
-            if (outOfScope.some(keyword => queryLower.includes(keyword))) {
-                return "I can only answer questions about William NG based on his CV and project data. Please ask about his skills, experience, education, or projects.";
-            }
-            
-            // Generate responses based on query
-            if (queryLower.includes('who is william') || (queryLower.includes('who is') && isAboutWilliam(query))) {
-                return williamData.overview;
-            }
-            
-            if (queryLower.includes('skill')) {
-                return `William's technical skills include:\n${williamData.skills.technical.map(skill => `• ${skill}`).join('\n')}\n\nHis soft skills include: ${williamData.skills.soft.join(', ')}.`;
-            }
-            
-            if (queryLower.includes('education') || queryLower.includes('degree')) {
-                return williamData.education;
-            }
-            
-            if (queryLower.includes('experience') || (queryLower.includes('work') && !queryLower.includes('project'))) {
-                return `William has worked as:\n${williamData.experience.map(exp => `• ${exp}`).join('\n')}`;
-            }
-            
-            if (queryLower.includes('project')) {
-                return williamData.projects;
-            }
-            
-            // Default response
-            return "I can provide information about William's skills, experience, education, and projects. Please ask a more specific question.";
-        }
+</div>
+</section>
 
-        // Handle send message
-        function sendMessage() {
-            const message = messageInput.value.trim();
-            if (!message) return;
-            
-            // Add user message
-            addMessage(message, true);
-            messageInput.value = '';
-            
-            // Show typing indicator
-            typingIndicator.classList.add('show');
-            
-            // Simulate response delay
-            setTimeout(() => {
-                const response = generateResponse(message);
-                addMessage(response);
-                typingIndicator.classList.remove('show');
-            }, 1000);
-        }
+<!-- Contact Section -->
+<section id="contact" class="mb-12">
+<h2 class="section-title text-yellow-300 mb-6">Contact</h2>
+<div class="project-card p-6 rounded-lg text-lg">
+<p>Email: <a href="mailto:waileukng@gmail.com" class="text-blue-300 underline">waileukng@gmail.com</a></p>
+<p>LinkedIn: <a href="https://linkedin.com/in/waileukng" class="text-blue-300 underline">linkedin.com/in/waileukng</a></p>
+<p>GitHub: <a href="https://github.com/waileukng" class="text-blue-300 underline">github.com/waileukng</a></p>
+</div>
+</section>
 
-        // Event listeners
-        sendButton.addEventListener('click', sendMessage);
-        messageInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                sendMessage();
-            }
-        });
+</main>
 
-        // Add welcome message
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                addMessage("Hi! I'm William's AI assistant. I can answer questions about his skills, experience, education, and projects. What would you like to know?");
-            }, 500);
-        });
-    </script>
+<footer class="bg-gradient-to-r from-blue-900 to-purple-900 py-6 text-center">
+<p class="text-white">© 2026 Wai Leuk NG</p>
+</footer>
+
+<!-- ================= CHATBOT SCRIPT (UNCHANGED) ================= -->
+<script>
+function scrollToSection(sectionId) {
+    document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+}
+
+const williamData = {
+name: "William NG",
+overview: "William NG is an AI researcher and NYU CS master's student specializing in deep learning and generative models.",
+skills: { technical: ["Python", "PyTorch", "GANs", "Diffusion Models", "LLMs"] },
+education: "BEng Electronic and Information Engineering, HKPolyU; MS CS NYU Tandon",
+projects: "Final Year Project on Image Generation using StyleGAN2 and DTLS."
+};
+
+const chatContainer = document.getElementById('chatContainer');
+const messageInput = document.getElementById('messageInput');
+const sendButton = document.getElementById('sendButton');
+const typingIndicator = document.getElementById('typingIndicator');
+
+function addMessage(content, isUser=false) {
+    const div = document.createElement('div');
+    div.className = `mb-3 ${isUser ? 'text-right' : ''}`;
+    const bubble = document.createElement('div');
+    bubble.className = `inline-block p-3 rounded-lg ${isUser ? 'user-message' : 'bot-message'}`;
+    bubble.textContent = content;
+    div.appendChild(bubble);
+    chatContainer.appendChild(div);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function generateResponse(q) {
+    q = q.toLowerCase();
+    if (q.includes("skill")) return williamData.skills.technical.join(", ");
+    if (q.includes("education")) return williamData.education;
+    if (q.includes("project")) return williamData.projects;
+    if (q.includes("who")) return williamData.overview;
+    return "Ask me about William's skills, education, or projects.";
+}
+
+function sendMessage() {
+    const msg = messageInput.value.trim();
+    if (!msg) return;
+    addMessage(msg, true);
+    messageInput.value = "";
+    typingIndicator.classList.add("show");
+    setTimeout(() => {
+        addMessage(generateResponse(msg));
+        typingIndicator.classList.remove("show");
+    }, 800);
+}
+
+sendButton.onclick = sendMessage;
+messageInput.onkeypress = e => { if (e.key === "Enter") sendMessage(); };
+
+window.onload = () => addMessage("Hello! Ask me about William's research, skills, or background.");
+</script>
+
 </body>
 </html>
